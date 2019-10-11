@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 
-const int32_t DATA_BLOCK_SIZE = 10240;
+const uint32_t DATA_BLOCK_SIZE = 10240;
 
 Wave::Wave()
 {
@@ -51,7 +51,7 @@ bool Wave::loadFromFile(std::string path)
     fread(info,sizeof(WaveInfo),1,file);
 
     char head[4]={'\0'};
-    int32_t len;
+    uint32_t len;
     fread(head,sizeof(char),4,file);
     if(strcmp(head,"LIST")==0)
     {
@@ -63,7 +63,7 @@ bool Wave::loadFromFile(std::string path)
     {
         fread(&this->mDataLen,sizeof(int32_t),1,file);
         this->mData=new char[this->mDataLen];
-        int32_t len=0;
+        uint32_t len=0;
         while(len+DATA_BLOCK_SIZE<this->mDataLen)
         {
             auto rlen=fread(this->mData+len,sizeof(char),DATA_BLOCK_SIZE,file);
@@ -76,7 +76,7 @@ bool Wave::loadFromFile(std::string path)
         }
         auto rlen=fread(this->mData,sizeof(char),static_cast<size_t>(this->mDataLen-len),file);
 
-        if(static_cast<int32_t>(rlen)!=this->mDataLen-len)
+        if(static_cast<uint32_t>(rlen)!=this->mDataLen-len)
         {
             fclose(file);
             return false;
@@ -97,7 +97,17 @@ const char *Wave::data()
     return this->mData;
 }
 
-int32_t Wave::length()
+uint16_t Wave::channels()
+{
+    return this->mInfo->mChannels;
+}
+
+uint32_t Wave::sampleRate()
+{
+    return this->mInfo->mSampleRate;
+}
+
+uint32_t Wave::length()
 {
     return this->mDataLen;
 }
