@@ -1,10 +1,12 @@
-#Wav音频格式分析
+# Wav音频格式分析
 
 写了一个类,简单提取wav里的信息和数据
 
+
 Wave结构:
-|数据类型|数据长度|功能|
-|----|----|----|
+
+| 数据类型 | 数据长度 | 功能 |
+| :---- | :---- | :---- |
 |RIFF层|
 |char|4|"RIFF"标志|
 |uint32_t|4|剩余文件长度|
@@ -25,6 +27,7 @@ Wave结构:
 |char|4|"data"标志|
 |uint32_t|4|数据大小|
 |char|N|数据内容|
+
 
 参考:
 [[CSDN]Python0019 音频处理（二）.wav文件](https://blog.csdn.net/Moluth/article/details/79820978)
